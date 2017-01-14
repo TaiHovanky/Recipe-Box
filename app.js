@@ -1,4 +1,3 @@
-
 var globalRecArr = [{name: "Bacon Mac & Cheese", ingredients: ["macaroni noodles", "parmesan", "cheddar", "bacon"]}, {name: "Spaghetti and Meatballs", ingredients: ["spaghetti noodles", "tomato sauce", "ground beef"]}];
 
 var App = React.createClass({
@@ -25,10 +24,16 @@ var App = React.createClass({
 
 var updateRec = function(updatedObj){
   updatedObj.ingredients = updatedObj.ingredients.split(",");
+  var found = false;
   for(var i = 0; i<globalRecArr.length; i++){
     if(globalRecArr[i].name === updatedObj.name){
       globalRecArr[i] = updatedObj;
+      found = true;
+      return;
     }
+  }
+  if(!found){
+    globalRecArr.push(updatedObj);
   }
 }
 
@@ -51,7 +56,8 @@ var RecipesList = React.createClass({
 var Recipe = React.createClass({
   getInitialState: function(){
     return {
-      showIngedients: false
+      showIngedients: false,
+      showEditForm: false
     }
   },
   showRecipe: function(e){
@@ -60,11 +66,16 @@ var Recipe = React.createClass({
       showIngredients: !this.state.showIngredients
     });
   },
+  showEdits: function(){
+    this.setState({
+      showEditForm: !this.state.showEditForm
+    });
+  },
   render: function(){
     return (
       <div>
         <h2 onClick={this.showRecipe.bind(this)}>{this.props.recipe.name}</h2>
-        {this.state.showIngredients && <IngredientList recipeName={this.props.recipe.name} ingredients={this.props.recipe.ingredients} handleIngredientChange={this.props.handleIngredientChange} />}
+        {this.state.showIngredients && <IngredientList recipeName={this.props.recipe.name} ingredients={this.props.recipe.ingredients} handleIngredientChange={this.props.handleIngredientChange} showForm={this.state.showEditForm} toggleForm={this.showEdits.bind(this)}/>}
       </div>
     )
   }
@@ -80,9 +91,9 @@ var IngredientList = React.createClass({
             return <Ingredient ingredient={ingredient} />
           })}
         </ul>
-        <EditButton />
-        <EditForm recipeNameStr={this.props.recipeName} ingredientsStrList={this.props.ingredients} handleIngredientChange={this.props.handleIngredientChange}
-/>
+        <EditButton toggleForm={this.props.toggleForm} />
+        {this.props.showForm && <EditForm recipeNameStr={this.props.recipeName} ingredientsStrList={this.props.ingredients} handleIngredientChange={this.props.handleIngredientChange}
+/>}
       </div>
     )
   }
@@ -99,8 +110,12 @@ var Ingredient = React.createClass({
 });
 
 var EditButton = React.createClass({
+  handleToggle: function(e){
+    e.preventDefault();
+    this.props.toggleForm();
+  },
   render: function(){
-    return <button class="btn">Edit</button>
+    return <button class="btn" onClick={this.handleToggle.bind(this)}>Edit</button>
   }
 });
 
