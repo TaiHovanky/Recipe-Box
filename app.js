@@ -1,14 +1,16 @@
 
+var globalRecArr = [{name: "Bacon Mac & Cheese", ingredients: ["macaroni noodles", "parmesan", "cheddar", "bacon"]}, {name: "Spaghetti and Meatballs", ingredients: ["spaghetti noodles", "tomato sauce", "ground beef"]}];
+
 var App = React.createClass({
   getInitialState: function(){
     return {
-      recipeArr: [{name: "Bacon Mac & Cheese", ingredients: ["macaroni noodles", "parmesan", "cheddar", "bacon"]}, {name: "Spaghetti and Meatballs", ingredients: ["spaghetti noodles", "tomato sauce", "ground beef"]}]
-    }
+      recipeArr: globalRecArr
+    };
   },
   updateRecipes: function(update){
-    alert(update);
+    updateRec(update);
     this.setState({
-      recipeArr: update
+      recipeArr: globalRecArr
     })
   },
   render: function(){
@@ -20,6 +22,15 @@ var App = React.createClass({
     )
   }
 });
+
+var updateRec = function(updatedObj){
+  updatedObj.ingredients = updatedObj.ingredients.split(",");
+  for(var i = 0; i<globalRecArr.length; i++){
+    if(globalRecArr[i].name === updatedObj.name){
+      globalRecArr[i] = updatedObj;
+    }
+  }
+}
 
 var RecipesList = React.createClass({
   render: function(){
@@ -101,7 +112,6 @@ var EditForm = React.createClass({
   },
   changeRecipe: function(e){
     e.preventDefault();
-    alert('yes');
     var recipeObj = {
       name: this.refs.nameStr.value,
       ingredients: this.refs.ingredientStr.value
@@ -114,7 +124,7 @@ var EditForm = React.createClass({
       <div>
         <form onSubmit={this.changeRecipe.bind(this)}>
           <label><strong>Recipe</strong>
-            <input type="text" className="form-control" ref="nameStr"></input>
+            <input type="text" className="form-control" ref="nameStr" defaultValue={this.props.recipeNameStr}></input>
           </label>
           <label><strong>Ingredients</strong>
             <input type="text" className="form-control" ref="ingredientStr" defaultValue={this.props.ingredientsStrList}></input>
