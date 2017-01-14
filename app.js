@@ -17,6 +17,8 @@ var App = React.createClass({
     return (
       <div>
         <RecipesList recipes={this.state.recipeArr} handleIngredientChange={this.updateRecipes}/>
+        <AddButton />
+        <AddForm handleRecipeAdd={this.updateRecipes} />
       </div>
     )
   }
@@ -148,6 +150,40 @@ var EditForm = React.createClass({
         </form>
       </div>
     )
+  }
+});
+
+var AddButton = React.createClass({
+  render: function(){
+    return (
+      <button className='btn'>Add Recipe</button>
+    );
+  }
+});
+
+var AddForm = React.createClass({
+  handleSave: function(e){
+    e.preventDefault();
+    var newRecipeObj = {
+      name: this.refs.newRecipeName.value,
+      ingredients: this.refs.newRecIngredients.value
+    };
+    this.props.handleRecipeAdd(newRecipeObj);
+  },
+  render: function(){
+    return (
+      <div>
+        <form onSubmit={this.handleSave.bind(this)}>
+          <label><strong>Recipe</strong>
+            <input type="text" className="form-control" ref="newRecipeName" defaultValue={this.props.recipeNameStr}></input>
+          </label>
+          <label><strong>Ingredients</strong>
+            <input type="text" className="form-control" ref="newRecIngredients" defaultValue={this.props.ingredientsStrList}></input>
+            <input type="submit" className="btn" value="Save"></input>
+          </label>  
+        </form>
+      </div>
+    );  
   }
 });
 
