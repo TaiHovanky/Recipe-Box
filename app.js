@@ -96,8 +96,8 @@ var Recipe = React.createClass({
   },
   render: function(){
     return (
-      <div>
-        <h2 onClick={this.showRecipe.bind(this)}>{this.props.recipe.name}</h2>
+      <div className="panel panel-info">
+        <h2 className="panel-heading" onClick={this.showRecipe.bind(this)}>{this.props.recipe.name}</h2>
         {this.state.showIngredients && <IngredientList recipeName={this.props.recipe.name} ingredients={this.props.recipe.ingredients} handleIngredientChange={this.props.handleIngredientChange} showForm={this.state.showEditForm} toggleForm={this.showEdits.bind(this)} deleteRecipe={this.props.deleteRecipe}/>}
       </div>
     )
@@ -107,15 +107,15 @@ var Recipe = React.createClass({
 var IngredientList = React.createClass({
   render: function(){
     return (
-      <div>
+      <div className="panel-body">
         <h3>Ingredients</h3>
-        <ul>
+        <ul className="list-group">
           {this.props.ingredients.map(function(ingredient){
             return <Ingredient ingredient={ingredient} />
           })}
         </ul>
-        <EditButton toggleForm={this.props.toggleForm} />
-        <DeleteButton deleteRecipe={this.props.deleteRecipe} recipeNameStr={this.props.recipeName}/>
+          <EditButton toggleForm={this.props.toggleForm} />
+          <DeleteButton deleteRecipe={this.props.deleteRecipe} recipeNameStr={this.props.recipeName}/>
         {this.props.showForm && <EditForm recipeNameStr={this.props.recipeName} ingredientsStrList={this.props.ingredients} handleIngredientChange={this.props.handleIngredientChange}
 />}
       </div>
@@ -126,9 +126,9 @@ var IngredientList = React.createClass({
 var Ingredient = React.createClass({
   render: function(){
     return (
-      <div>
+      <li className="list-group-item">
         {this.props.ingredient}
-      </div>
+      </li>
     )
   }
 });
@@ -139,7 +139,7 @@ var EditButton = React.createClass({
     this.props.toggleForm();
   },
   render: function(){
-    return <button class="btn" onClick={this.handleToggle.bind(this)}>Edit</button>
+    return <button className="btn btn-success col-md-5" onClick={this.handleToggle.bind(this)}>Edit</button>
   }
 });
 
@@ -150,7 +150,7 @@ var DeleteButton = React.createClass({
     this.props.deleteRecipe(toBeDeleted);
   },
   render: function(){
-    return <button class="btn" onClick={this.handleDelete.bind(this)}>Delete</button>
+    return <button className="btn btn-danger col-md-5 col-md-offset-2" onClick={this.handleDelete.bind(this)}>Delete</button>
   }
 });
 
@@ -172,14 +172,17 @@ var EditForm = React.createClass({
     //{this.props.recipeNameStr} //{this.props.ingredientsStrList}
     return (
       <div>
-        <form onSubmit={this.changeRecipe.bind(this)}>
-          <label><strong>Recipe</strong>
-            <input type="text" className="form-control" ref="nameStr" defaultValue={this.props.recipeNameStr}></input>
-          </label>
-          <label><strong>Ingredients</strong>
-            <input type="text" className="form-control" ref="ingredientStr" defaultValue={this.props.ingredientsStrList}></input>
-            <input type="submit" className="btn" value="Save Edits"></input>
-          </label>
+        <form onSubmit={this.changeRecipe.bind(this)} className="form-horizontal">
+          <div className="form-group recipeName">
+            <label className="col-md-offset-1"><h4>Recipe</h4></label>
+            <input type="text"  ref="nameStr" className="form-control" defaultValue={this.props.recipeNameStr}></input>
+          
+          </div>
+          <div className="form-group">
+            <label className="col-md-offset-1"><h4>Ingredients</h4></label>
+            <input type="text"  ref="ingredientStr" className="form-control" defaultValue={this.props.ingredientsStrList}></input>
+            <input type="submit" className="btn btn-success editSubmit col-md-6 col-md-offset-3" value="Save Edits"></input>
+          </div>
         </form>
       </div>
     )
@@ -192,7 +195,7 @@ var AddButton = React.createClass({
   },
   render: function(){
     return (
-      <button className='btn' onClick={this.handleToggle.bind(this)}>Add Recipe</button>
+      <button className='btn btn-default col-md-6 col-md-offset-3' onClick={this.handleToggle.bind(this)}>Add Recipe</button>
     );
   }
 });
@@ -209,15 +212,13 @@ var AddForm = React.createClass({
   },
   render: function(){
     return (
-      <div>
-        <form onSubmit={this.handleSave.bind(this)} ref="newForm">
-          <label><strong>Recipe</strong>
+      <div className="addForm">
+        <form onSubmit={this.handleSave.bind(this)} ref="newForm" className="form-horizontal">
+          <label className="col-md-offset-1"><h4>Recipe</h4></label>
             <input type="text" className="form-control" ref="newRecipeName"></input>
-          </label>
-          <label><strong>Ingredients</strong>
+          <label className="col-md-offset-1"><h4>Ingredients</h4></label>
             <input type="text" className="form-control" ref="newRecIngredients"></input>
-            <input type="submit" className="btn" value="Save"></input>
-          </label>  
+            <input type="submit" className="btn btn-success col-md-6 col-md-offset-3" value="Save"></input>  
         </form>
       </div>
     );  
