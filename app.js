@@ -3,7 +3,8 @@ var globalRecArr = [{name: "Bacon Mac & Cheese", ingredients: ["macaroni noodles
 var App = React.createClass({
   getInitialState: function(){
     return {
-      recipeArr: globalRecArr
+      recipeArr: globalRecArr,
+      showAdd: false
     };
   },
   updateRecipes: function(update){
@@ -12,13 +13,17 @@ var App = React.createClass({
       recipeArr: globalRecArr
     })
   },
+  toggleAdd: function(){
+    this.setState({
+      showAdd: !this.state.showAdd
+    });
+  },
   render: function(){
-    
     return (
       <div>
         <RecipesList recipes={this.state.recipeArr} handleIngredientChange={this.updateRecipes}/>
-        <AddButton />
-        <AddForm handleRecipeAdd={this.updateRecipes} />
+        <AddButton toggleAddForm={this.toggleAdd}/>
+        {this.state.showAdd && <AddForm handleRecipeAdd={this.updateRecipes} />}
       </div>
     )
   }
@@ -154,9 +159,12 @@ var EditForm = React.createClass({
 });
 
 var AddButton = React.createClass({
+  handleToggle: function(e){
+    this.props.toggleAddForm();
+  },
   render: function(){
     return (
-      <button className='btn'>Add Recipe</button>
+      <button className='btn' onClick={this.handleToggle.bind(this)}>Add Recipe</button>
     );
   }
 });
@@ -169,16 +177,17 @@ var AddForm = React.createClass({
       ingredients: this.refs.newRecIngredients.value
     };
     this.props.handleRecipeAdd(newRecipeObj);
+    this.refs.newForm.reset();
   },
   render: function(){
     return (
       <div>
-        <form onSubmit={this.handleSave.bind(this)}>
+        <form onSubmit={this.handleSave.bind(this)} ref="newForm">
           <label><strong>Recipe</strong>
-            <input type="text" className="form-control" ref="newRecipeName" defaultValue={this.props.recipeNameStr}></input>
+            <input type="text" className="form-control" ref="newRecipeName"></input>
           </label>
           <label><strong>Ingredients</strong>
-            <input type="text" className="form-control" ref="newRecIngredients" defaultValue={this.props.ingredientsStrList}></input>
+            <input type="text" className="form-control" ref="newRecIngredients"></input>
             <input type="submit" className="btn" value="Save"></input>
           </label>  
         </form>
