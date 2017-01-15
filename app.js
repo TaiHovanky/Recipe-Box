@@ -11,7 +11,13 @@ var App = React.createClass({
     updateRec(update);
     this.setState({
       recipeArr: globalRecArr
-    })
+    });
+  },
+  deleteRecipe: function(deleted){
+    deleteRec(deleted);
+    this.setState({
+      recipeArr: globalRecArr
+    });
   },
   toggleAdd: function(){
     this.setState({
@@ -21,7 +27,7 @@ var App = React.createClass({
   render: function(){
     return (
       <div>
-        <RecipesList recipes={this.state.recipeArr} handleIngredientChange={this.updateRecipes}/>
+        <RecipesList recipes={this.state.recipeArr} handleIngredientChange={this.updateRecipes} deleteRecipe={this.deleteRecipe}/>
         <AddButton toggleAddForm={this.toggleAdd}/>
         {this.state.showAdd && <AddForm handleRecipeAdd={this.updateRecipes} />}
       </div>
@@ -44,15 +50,25 @@ var updateRec = function(updatedObj){
   }
 }
 
+var deleteRec = function(deleted){
+  alert(deleted);
+  for(var i = 0; i<globalRecArr.length; i++){
+    if(globalRecArr[i].name === deleted){
+      globalRecArr.splice(i, 1);
+      return;
+    }
+  }
+};
+
 var RecipesList = React.createClass({
   render: function(){
     var ingredientChange = this.props.handleIngredientChange;
-    //console.log(ingredChange);
+    var deleteRec = this.props.deleteRecipe;
     return (
       <div>
         <ul>
           {this.props.recipes.map(function(recipe, ingredChange){
-            return <Recipe recipe={recipe} handleIngredientChange={ingredientChange}/>
+            return <Recipe recipe={recipe} handleIngredientChange={ingredientChange} deleteRecipe={deleteRec}/>
           })}
         </ul>
       </div> 
@@ -82,7 +98,7 @@ var Recipe = React.createClass({
     return (
       <div>
         <h2 onClick={this.showRecipe.bind(this)}>{this.props.recipe.name}</h2>
-        {this.state.showIngredients && <IngredientList recipeName={this.props.recipe.name} ingredients={this.props.recipe.ingredients} handleIngredientChange={this.props.handleIngredientChange} showForm={this.state.showEditForm} toggleForm={this.showEdits.bind(this)}/>}
+        {this.state.showIngredients && <IngredientList recipeName={this.props.recipe.name} ingredients={this.props.recipe.ingredients} handleIngredientChange={this.props.handleIngredientChange} showForm={this.state.showEditForm} toggleForm={this.showEdits.bind(this)} deleteRecipe={this.props.deleteRecipe}/>}
       </div>
     )
   }
@@ -99,6 +115,7 @@ var IngredientList = React.createClass({
           })}
         </ul>
         <EditButton toggleForm={this.props.toggleForm} />
+        <DeleteButton deleteRecipe={this.props.deleteRecipe} recipeNameStr={this.props.recipeName}/>
         {this.props.showForm && <EditForm recipeNameStr={this.props.recipeName} ingredientsStrList={this.props.ingredients} handleIngredientChange={this.props.handleIngredientChange}
 />}
       </div>
@@ -123,6 +140,17 @@ var EditButton = React.createClass({
   },
   render: function(){
     return <button class="btn" onClick={this.handleToggle.bind(this)}>Edit</button>
+  }
+});
+
+var DeleteButton = React.createClass({
+  handleDelete: function(e){
+    var toBeDeleted = this.props.recipeNameStr;
+    alert(toBeDeleted);
+    this.props.deleteRecipe(toBeDeleted);
+  },
+  render: function(){
+    return <button class="btn" onClick={this.handleDelete.bind(this)}>Delete</button>
   }
 });
 
