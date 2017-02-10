@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import RecipesList from './RecipesList'
 
 var globalRecArr = [{name: "Bacon Mac & Cheese", ingredients: ["macaroni noodles", "parmesan", "cheddar", "bacon"]}, {name: "Spaghetti and Meatballs", ingredients: ["spaghetti noodles", "tomato sauce", "ground beef"]}];
 
@@ -58,69 +59,69 @@ var deleteRec = function(deleted){
   }
 };
 
-var RecipesList = function(props){
-    var ingredientChange = props.handleIngredientChange;
-    var deleteRec = props.deleteRecipe;
-    return (
-        <ul>
-          {props.recipes.map(function(recipe, ingredChange){
-            return <Recipe recipe={recipe} handleIngredientChange={ingredientChange} deleteRecipe={deleteRec}/>
-          })}
-        </ul>
-    );
-}
+// var RecipesList = function(props){
+//     var ingredientChange = props.handleIngredientChange;
+//     var deleteRec = props.deleteRecipe;
+//     return (
+//         <ul>
+//           {props.recipes.map(function(recipe, ingredChange){
+//             return <Recipe recipe={recipe} handleIngredientChange={ingredientChange} deleteRecipe={deleteRec}/>
+//           })}
+//         </ul>
+//     );
+// }
 
-var Recipe = React.createClass({
-  getInitialState: function(){
-    return {
-      showIngedients: false,
-      showEditForm: false
-    }
-  },
-  showRecipe: function(e){
-    this.setState({
-      showIngredients: !this.state.showIngredients
-    });
-  },
-  showEdits: function(){
-    this.setState({
-      showEditForm: !this.state.showEditForm
-    });
-  },
-  render: function(){
-    return (
-      <div className="panel panel-info">
-        <h2 className="panel-heading" onClick={this.showRecipe}>{this.props.recipe.name}</h2>
-        {this.state.showIngredients && <IngredientList recipeName={this.props.recipe.name} ingredients={this.props.recipe.ingredients} handleIngredientChange={this.props.handleIngredientChange} showForm={this.state.showEditForm} toggleForm={this.showEdits} deleteRecipe={this.props.deleteRecipe}/>}
-      </div>
-    )
-  }
-});
+// var Recipe = React.createClass({
+//   getInitialState: function(){
+//     return {
+//       showIngedients: false,
+//       showEditForm: false
+//     }
+//   },
+//   showRecipe: function(e){
+//     this.setState({
+//       showIngredients: !this.state.showIngredients
+//     });
+//   },
+//   showEdits: function(){
+//     this.setState({
+//       showEditForm: !this.state.showEditForm
+//     });
+//   },
+//   render: function(){
+//     return (
+//       <div className="panel panel-info">
+//         <h2 className="panel-heading" onClick={this.showRecipe}>{this.props.recipe.name}</h2>
+//         {this.state.showIngredients && <IngredientList recipeName={this.props.recipe.name} ingredients={this.props.recipe.ingredients} handleIngredientChange={this.props.handleIngredientChange} showForm={this.state.showEditForm} toggleForm={this.showEdits} deleteRecipe={this.props.deleteRecipe}/>}
+//       </div>
+//     )
+//   }
+// });
 
-var IngredientList = function(props){
-    return (
-      <div className="panel-body">
-        <h3>Ingredients</h3>
-        <ul className="list-group">
-          {props.ingredients.map(function(ingredient){
-            return <Ingredient ingredient={ingredient} />
-          })}
-        </ul>
-          <EditButton toggleForm={props.toggleForm} />
-          <DeleteButton deleteRecipe={props.deleteRecipe} recipeNameStr={props.recipeName}/>
-        {props.showForm && <EditForm recipeNameStr={props.recipeName} ingredientsStrList={props.ingredients} handleIngredientChange={props.handleIngredientChange}
-/>}
-      </div>
-    );
-};
+// var IngredientList = function(props){
+//     return (
+//       <div className="panel-body">
+//         <h3>Ingredients</h3>
+//         <ul className="list-group">
+//           {props.ingredients.map(function(ingredient){
+//             return <Ingredient ingredient={ingredient} />
+//           })}
+//         </ul>
+//           <EditButton toggleForm={props.toggleForm} />
+//           <DeleteButton deleteRecipe={props.deleteRecipe} recipeNameStr={props.recipeName}/>
+//         {props.showForm && <EditForm recipeNameStr={props.recipeName} ingredientsStrList={props.ingredients} handleIngredientChange={props.handleIngredientChange}
+// />}
+//       </div>
+//     );
+// };
 
-var Ingredient = function(props){
-    return (
-      <li className="list-group-item">
-        {props.ingredient}
-      </li>
-    );
-};
+// var Ingredient = function(props){
+//     return (
+//       <li className="list-group-item">
+//         {props.ingredient}
+//       </li>
+//     );
+// };
 
 var EditButton = React.createClass({
   handleToggle: function(e){
