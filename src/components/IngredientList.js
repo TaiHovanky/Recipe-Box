@@ -1,19 +1,28 @@
 import React from 'react'
 import Ingredient from './Ingredient'
+import EditButton from './EditButton'
+import DeleteButton from './DeleteButton'
+import EditForm from './EditForm'
 
-const IngredientList = (props) => {
-  <div className="panel-body">
+export default class IngredientList extends React.Component {
+
+  render() {
+    console.log('this', this)
+    return (<div className="panel-body">
     <h3>Ingredients</h3>
     <ul className="list-group">
-      {props.ingredients.map(function(ingredient){
+      {this.props.ingredients.map(function(ingredient){
         return <Ingredient ingredient={ingredient} />
       })}
     </ul>
-      <EditButton toggleForm={props.toggleForm} />
-      <DeleteButton deleteRecipe={props.deleteRecipe} recipeNameStr={props.recipeName}/>
-    {props.showForm && <EditForm recipeNameStr={props.recipeName} ingredientsStrList={props.ingredients} handleIngredientChange={props.handleIngredientChange}
-/>}
-  </div>
+      <EditButton toggleForm={this.props.toggleForm} />
+      <DeleteButton 
+        deleteRecipe={this.props.deleteRecipe} 
+        recipeNameStr={this.props.recipeName}/>
+      {this.props.showForm && <EditForm 
+        recipeNameStr={this.props.recipeName} 
+        ingredientsStrList={this.props.ingredients} 
+        handleIngredientChange={this.props.handleIngredientChange}/>}
+    </div>)
+  }
 }
-
-export default IngredientList

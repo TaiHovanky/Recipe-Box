@@ -1,7 +1,11 @@
-const Ingredient = (props) => {
-  <li className="list-group-item">
-    {props.ingredient}
-  </li>
-};
+import React from 'react'
 
-export default Ingredient
+export default class Ingredient extends React.Component {
+  render() {
+    return (
+      <li className="list-group-item">
+        {this.props.ingredient}
+      </li>
+    )
+  }
+};

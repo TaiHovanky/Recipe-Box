@@ -8,9 +8,12 @@ export default class Recipe extends React.Component {
       showIngedients: false,
       showEditForm: false
     }
+    this.showRecipe.bind(this);
+    //this.setState.bind(this);
   }
       
   showRecipe(e) {
+    console.log('this', this);
     this.setState({
       showIngredients: !this.state.showIngredients
     });
@@ -25,8 +28,14 @@ export default class Recipe extends React.Component {
   render() {
     return (
       <div className="panel panel-info">
-        <h2 className="panel-heading" onClick={this.showRecipe}>{this.props.recipe.name}</h2>
-        {this.state.showIngredients && <IngredientList recipeName={this.props.recipe.name} ingredients={this.props.recipe.ingredients} handleIngredientChange={this.props.handleIngredientChange} showForm={this.state.showEditForm} toggleForm={this.showEdits} deleteRecipe={this.props.deleteRecipe}/>}
+        <h2 className="panel-heading" onClick={ () => this.showRecipe() }>{this.props.recipe.name}</h2>
+        {this.state.showIngredients && <IngredientList 
+          recipeName={this.props.recipe.name} 
+          ingredients={this.props.recipe.ingredients} 
+          handleIngredientChange={this.props.handleIngredientChange} 
+          showForm={this.state.showEditForm} 
+          toggleForm={ () => this.showEdits() } 
+          deleteRecipe={this.props.deleteRecipe}/>}
       </div>
     )
   }

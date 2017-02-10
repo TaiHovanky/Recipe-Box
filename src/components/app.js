@@ -123,58 +123,58 @@ var deleteRec = function(deleted){
 //     );
 // };
 
-var EditButton = React.createClass({
-  handleToggle: function(e){
-    e.preventDefault();
-    this.props.toggleForm();
-  },
-  render: function(){
-    return <button className="btn btn-success col-md-5" onClick={this.handleToggle}>Edit</button>
-  }
-});
+// var EditButton = React.createClass({
+//   handleToggle: function(e){
+//     e.preventDefault();
+//     this.props.toggleForm();
+//   },
+//   render: function(){
+//     return <button className="btn btn-success col-md-5" onClick={this.handleToggle}>Edit</button>
+//   }
+// });
 
-var DeleteButton = React.createClass({
-  handleDelete: function(e){
-    var toBeDeleted = this.props.recipeNameStr;
-    this.props.deleteRecipe(toBeDeleted);
-  },
-  render: function(){
-    return <button className="btn btn-danger col-md-5 col-md-offset-2" onClick={this.handleDelete}>Delete</button>
-  }
-});
+// var DeleteButton = React.createClass({
+//   handleDelete: function(e){
+//     var toBeDeleted = this.props.recipeNameStr;
+//     this.props.deleteRecipe(toBeDeleted);
+//   },
+//   render: function(){
+//     return <button className="btn btn-danger col-md-5 col-md-offset-2" onClick={this.handleDelete}>Delete</button>
+//   }
+// });
 
-var EditForm = React.createClass({
-  getInitialState: function(){
-    return {
-      ingredientStr: this.props.ingredientsStrList.join(", ")  
-    }
-  },
-  changeRecipe: function(e){
-    e.preventDefault();
-    var recipeObj = {
-      name: this.refs.nameStr.value,
-      ingredients: this.refs.ingredientStr.value
-    };
-    this.props.handleIngredientChange(recipeObj);
-  },
-  render: function(){
-    return (
-      <div>
-        <form onSubmit={this.changeRecipe.bind(this)} className="form-horizontal">
-          <div className="form-group recipeName">
-            <label className="col-md-offset-1"><h4>Recipe</h4></label>
-            <input type="text"  ref="nameStr" className="form-control" defaultValue={this.props.recipeNameStr}></input>
-          </div>
-          <div className="form-group">
-            <label className="col-md-offset-1"><h4>Ingredients</h4></label>
-            <input type="text"  ref="ingredientStr" className="form-control" defaultValue={this.props.ingredientsStrList}></input>
-            <input type="submit" className="btn btn-success editSubmit col-md-6 col-md-offset-3" value="Save Edits"></input>
-          </div>
-        </form>
-      </div>
-    )
-  }
-});
+// var EditForm = React.createClass({
+//   getInitialState: function(){
+//     return {
+//       ingredientStr: this.props.ingredientsStrList.join(", ")  
+//     }
+//   },
+//   changeRecipe: function(e){
+//     e.preventDefault();
+//     var recipeObj = {
+//       name: this.refs.nameStr.value,
+//       ingredients: this.refs.ingredientStr.value
+//     };
+//     this.props.handleIngredientChange(recipeObj);
+//   },
+//   render: function(){
+//     return (
+//       <div>
+//         <form onSubmit={this.changeRecipe.bind(this)} className="form-horizontal">
+//           <div className="form-group recipeName">
+//             <label className="col-md-offset-1"><h4>Recipe</h4></label>
+//             <input type="text"  ref="nameStr" className="form-control" defaultValue={this.props.recipeNameStr}></input>
+//           </div>
+//           <div className="form-group">
+//             <label className="col-md-offset-1"><h4>Ingredients</h4></label>
+//             <input type="text"  ref="ingredientStr" className="form-control" defaultValue={this.props.ingredientsStrList}></input>
+//             <input type="submit" className="btn btn-success editSubmit col-md-6 col-md-offset-3" value="Save Edits"></input>
+//           </div>
+//         </form>
+//       </div>
+//     )
+//   }
+// });
 
 var AddButton = React.createClass({
   handleToggle: function(e){
