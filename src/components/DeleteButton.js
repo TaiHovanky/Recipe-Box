@@ -9,9 +9,9 @@ export default class DeleteButton extends React.Component{
 
   render() {
     return <button 
-        className="btn btn-danger col-md-5 col-md-offset-2" 
-        onClick={ () => this.handleDelete() }>
-        Delete
-        </button>
+      className="btn btn-danger col-md-5 col-md-offset-2" 
+      onClick={ () => this.handleDelete() }>
+      Delete
+      </button>
   }
 };

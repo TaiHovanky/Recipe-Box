@@ -8,18 +8,19 @@ export default class EditForm extends React.Component {
     }
   }
 
-  changeRecipe() {
+  changeRecipe(event) {
     var recipeObj = {
       name: this.refs.nameStr.value,
       ingredients: this.refs.ingredientStr.value
     };
     this.props.handleIngredientChange(recipeObj);
+    event.preventDefault();
   }
 
   render() {
     return (
       <div>
-        <form onSubmit={this.changeRecipe.bind(this)} className="form-horizontal">
+        <form onSubmit={ (event) => this.changeRecipe(event) } className="form-horizontal">
           <div className="form-group recipeName">
             <label className="col-md-offset-1"><h4>Recipe</h4></label>
             <input type="text"  

@@ -7,6 +7,10 @@ export default class EditButton extends React.Component{
   }
 
   render() {
-    return <button className="btn btn-success col-md-5" onClick={ () => this.handleToggle() }>Edit</button>
+    return <button 
+      className="btn btn-success col-md-5" 
+      onClick={ () => this.handleToggle() }>
+      Edit
+      </button>
   }
 };
